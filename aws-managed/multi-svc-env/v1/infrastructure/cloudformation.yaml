@@ -91,6 +91,10 @@ Resources:
   # ECS Resources
   ECSCluster:
     Type: AWS::ECS::Cluster
+    Properties:
+      Tags:
+        - Key: project
+          Value: marex-solutions-cloud-platform-spike
 
   # A security group for the containers we will run in Fargate.
   # Rules are added to this security group based on what ingress you
