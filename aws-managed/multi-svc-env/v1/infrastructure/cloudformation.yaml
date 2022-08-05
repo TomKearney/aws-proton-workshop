@@ -2,6 +2,12 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: Simple Lambda based HTTP service template
 
+Parameters:
+  EnvironmentName:
+    Type: String
+    Description: "A friendly environment name that will be used for namespacing all cluster resources. Example: staging, qa, or production"
+    Default: '{{ environment.name }}'
+
 Mappings:
   # The VPC and subnet configuration is passed in via the environment spec.
   SubnetConfig:
@@ -139,12 +145,12 @@ Outputs:
     Description: Container Security group
     Value: !Ref 'ContainerSecurityGroup'
     Export:
-      Name: !Sub ${environment.name}':ContainerSecurityGroup
+      Name: !Sub ${EnvironmentName}:ContainerSecurityGroup
   ClusterName:
     Description: The name of the ECS cluster
     Value: !Ref 'ECSCluster'
     Export:
-      Name: !Sub ${environment.name}':ClusterName
+      Name: !Sub ${EnvironmentName}:ClusterName
   ECSTaskExecutionRole:
     Description: The ARN of the ECS task execution role
     Value: !GetAtt 'ECSTaskExecutionRole.Arn'
@@ -152,22 +158,22 @@ Outputs:
     Description: The ID of the VPC that this stack is deployed in
     Value: !Ref 'VPC'
     Export:
-      Name: !Sub ${environment.name}':VpcId
+      Name: !Sub ${EnvironmentName}:VpcId
   PublicSubnetOne:
     Description: Public subnet one
     Value: !Ref 'PublicSubnetOne'
     Export:
-      Name: !Sub ${environment.name}':PublicSubnetOne
+      Name: !Sub ${EnvironmentName}:PublicSubnetOne
   PublicSubnetTwo:
     Description: Public subnet two
     Value: !Ref 'PublicSubnetTwo'
     Export:
-      Name: !Sub ${environment.name}':PublicSubnetTwo
+      Name: !Sub ${EnvironmentName}:PublicSubnetTwo
   PublicSubnetThree:
     Description: Public subnet three
     Value: !Ref 'PublicSubnetThree'
     Export:
-      Name: !Sub ${environment.name}':PublicSubnetThree
+      Name: !Sub ${EnvironmentName}:PublicSubnetThree
   HostedZoneId:
     Description: The ID of the hosted zone
     Value: !Ref 'DnsHostedZone'
