@@ -138,24 +138,36 @@ Outputs:
   ContainerSecurityGroup:
     Description: Container Security group
     Value: !Ref 'ContainerSecurityGroup'
+    Export:
+      Name: '{{ environment.inputs.name}}':ContainerSecurityGroup
   ClusterName:
     Description: The name of the ECS cluster
     Value: !Ref 'ECSCluster'
+    Export:
+      Name: '{{ environment.inputs.name}}':ClusterName
   ECSTaskExecutionRole:
     Description: The ARN of the ECS task execution role
     Value: !GetAtt 'ECSTaskExecutionRole.Arn'
   VpcId:
     Description: The ID of the VPC that this stack is deployed in
     Value: !Ref 'VPC'
+    Export:
+      Name: '{{ environment.inputs.name}}':VpcId
   PublicSubnetOne:
     Description: Public subnet one
     Value: !Ref 'PublicSubnetOne'
+    Export:
+      Name: '{{ environment.inputs.name}}':PublicSubnetOne
   PublicSubnetTwo:
     Description: Public subnet two
     Value: !Ref 'PublicSubnetTwo'
+    Export:
+      Name: '{{ environment.inputs.name}}':PublicSubnetTwo
   PublicSubnetThree:
     Description: Public subnet three
     Value: !Ref 'PublicSubnetThree'
+    Export:
+      Name: '{{ environment.inputs.name}}':PublicSubnetThree
   HostedZoneId:
     Description: The ID of the hosted zone
     Value: !Ref 'DnsHostedZone'
