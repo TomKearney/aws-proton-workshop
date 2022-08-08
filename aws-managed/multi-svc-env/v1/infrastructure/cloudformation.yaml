@@ -1,6 +1,6 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
-Description: Simple Lambda based HTTP service template
+Description: Environment to host the Proton Workshop and ECS CI/CD Workshop workloads
 
 Parameters:
   EnvironmentName:
@@ -245,6 +245,8 @@ Resources:
         - VPCId: !Ref VPC
           VPCRegion: !Ref AWS::Region
 
+
+
 # These output values are will be available to service templates, given the
 # the 'environment' namespace, for example, environment.outputs.ClusterName.
 Outputs:
@@ -310,3 +312,8 @@ Outputs:
     Value: !Ref PublicLoadBalancerListener
     Export:
       Name: !Sub ${EnvironmentName}:PublicListener
+  ExternalUrl:
+    Description: The url of the external load balancer
+    Value: !Sub http://${PublicLoadBalancer.DNSName}
+    Export:
+      Name: !Sub ${EnvironmentName}:ExternalUrl
