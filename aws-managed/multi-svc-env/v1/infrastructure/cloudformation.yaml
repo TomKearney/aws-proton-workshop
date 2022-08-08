@@ -87,7 +87,7 @@ Resources:
         - Fn::GetAZs: !Ref 'AWS::Region'
       VpcId: !Ref 'VPC'
       CidrBlock: !FindInMap ['SubnetConfig', 'PrivateTwo', 'CIDR']
-  PrivateSubnetTwo:
+  PrivateSubnetThree:
     Type: AWS::EC2::Subnet
     Properties:
       AvailabilityZone: !Select
