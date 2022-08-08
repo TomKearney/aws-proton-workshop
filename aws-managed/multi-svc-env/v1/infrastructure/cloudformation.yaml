@@ -23,7 +23,7 @@ Mappings:
       CIDR: '10.0.100.0/24'
     PrivateTwo:
       CIDR: '10.0.101.0/24'
-    PrivateTwo:
+    PrivateThree:
       CIDR: '10.0.102.0/24'
 
 Resources:
