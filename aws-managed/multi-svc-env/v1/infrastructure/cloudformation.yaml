@@ -47,6 +47,9 @@ Resources:
       VpcId: !Ref 'VPC'
       CidrBlock: !Select [ 0, !Cidr [ !FindInMap ['SubnetConfig', 'VPC', 'CIDR'], 3, 8 ]]
       MapPublicIpOnLaunch: true
+      Tags:
+        - Key: project
+          Value: !Ref EnvironmentName
 
   PublicSubnetTwo:
     Type: AWS::EC2::Subnet
@@ -58,6 +61,9 @@ Resources:
       VpcId: !Ref 'VPC'
       CidrBlock: !Select [ 1, !Cidr [ !FindInMap ['SubnetConfig', 'VPC', 'CIDR'], 3, 8 ]]
       MapPublicIpOnLaunch: true
+      Tags:
+        - Key: project
+          Value: !Ref EnvironmentName
 
   PublicSubnetThree:
     Type: AWS::EC2::Subnet
@@ -69,6 +75,9 @@ Resources:
       VpcId: !Ref 'VPC'
       CidrBlock: !Select [ 2, !Cidr [ !FindInMap ['SubnetConfig', 'VPC', 'CIDR'], 3, 8 ]]
       MapPublicIpOnLaunch: true
+      Tags:
+        - Key: project
+          Value: !Ref EnvironmentName
 
   # IP addresses, and will only be reachable by other members of the VPC
   PrivateSubnetOne:
