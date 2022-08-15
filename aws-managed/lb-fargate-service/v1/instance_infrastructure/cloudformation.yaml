@@ -37,7 +37,24 @@ Resources:
         - FARGATE
       ExecutionRoleArn: '{{environment.outputs.ECSTaskExecutionRole}}'
       TaskRoleArn: !Ref "AWS::NoValue"
+      Volumes:
+        - Name: ServiceConfig
       ContainerDefinitions:
+        # Init container to fetch secrets for app
+        - Name: secret-init-container
+          Image: public.ecr.aws/aws-containers/aws-secrets-manager-secret-sidecar:latest
+          Cpu: 0
+          Memory: 128
+          Environment:
+            - Name: SECRET_ARN
+              Value: arn:aws:secretsmanager:eu-west-1:727836757917:secret:proton-workshop/ecs-tasks/sample-secret-tj5AES
+          MountPoints:
+            - ContainerPath: '/usr/{{service_instance.name}}/config'
+              SourceVolume: ServiceConfig
+              ReadOnly: true
+             
+
+        # App container
         - Name: '{{service_instance.name}}'
           Cpu: !FindInMap [TaskSize, '{{service_instance.inputs.task_size}}', Cpu]
           Memory: !FindInMap [TaskSize, '{{service_instance.inputs.task_size}}', Memory]
@@ -58,6 +75,14 @@ Resources:
               awslogs-group: '{{service.name}}/{{service_instance.name}}'
               awslogs-region: !Ref 'AWS::Region'
               awslogs-stream-prefix: 'fargate/service/{{service.name}}'
+          MountPoints:
+            - ContainerPath: '/usr/{{service_instance.name}}/config'
+              SourceVolume: ServiceConfig
+              ReadOnly: true
+          DependsOn:
+            - ContainerName: secret-init-container
+              Condition: Success
+          
 
   # The service_instance.inputs. The service is a resource which allows you to run multiple
   # copies of a type of task, and gather up their logs and metrics, as well
