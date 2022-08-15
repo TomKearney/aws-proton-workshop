@@ -80,8 +80,9 @@ Resources:
               SourceVolume: ServiceConfig
               ReadOnly: true
           DependsOn:
-            - ContainerName: secret-init-container
-              Condition: Success
+            - Condition: SUCCESS
+              ContainerName: secret-init-container
+              
           
 
   # The service_instance.inputs. The service is a resource which allows you to run multiple
