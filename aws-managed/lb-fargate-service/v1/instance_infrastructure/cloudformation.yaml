@@ -42,7 +42,7 @@ Resources:
       ContainerDefinitions:
         # Init container to fetch secrets for app
         - Name: secret-init-container
-          Image: public.ecr.aws/aws-containers/aws-secrets-manager-secret-sidecar:latest
+          Image: public.ecr.aws/aws-containers/aws-secrets-manager-secret-sidecar:0.1.4
           Cpu: 0
           Memory: 128
           Essential: false
