@@ -45,7 +45,7 @@ Resources:
           Image: public.ecr.aws/aws-containers/aws-secrets-manager-secret-sidecar:latest
           Cpu: 0
           Memory: 128
-          Essential: 
+          Essential: false
           Environment:
             - Name: SECRET_ARN
               Value: arn:aws:secretsmanager:eu-west-1:727836757917:secret:proton-workshop/ecs-tasks/sample-secret-tj5AES
