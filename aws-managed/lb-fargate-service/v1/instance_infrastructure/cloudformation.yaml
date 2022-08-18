@@ -42,17 +42,23 @@ Resources:
       ContainerDefinitions:
         # Init container to fetch secrets for app
         - Name: secret-init-container
-          Image: public.ecr.aws/aws-containers/aws-secrets-manager-secret-sidecar:0.1.4
+          Image: 727836757917.dkr.ecr.eu-west-1.amazonaws.com/platform-engineering/secrets-manager-secret-sidecar:latest
           Cpu: 0
           Memory: 128
           Essential: false
           Environment:
             - Name: SECRET_ARN
               Value: arn:aws:secretsmanager:eu-west-1:727836757917:secret:proton-workshop/ecs-tasks/sample-secret-tj5AES
+          LogConfiguration:
+            LogDriver: 'awslogs'
+            Options:
+              awslogs-create-group: 'True'
+              awslogs-group: '{{service.name}}/{{service_instance.name}}'
+              awslogs-region: !Ref 'AWS::Region'
+              awslogs-stream-prefix: 'fargate/service/{{service.name}}'
           MountPoints:
             - ContainerPath: '/usr/{{service_instance.name}}/config'
               SourceVolume: ServiceConfig
-             
 
         # App container
         - Name: '{{service_instance.name}}'
